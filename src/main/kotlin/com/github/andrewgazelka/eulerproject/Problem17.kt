@@ -1,6 +1,11 @@
-package eulerproject
+package com.github.andrewgazelka.eulerproject
 
-class Problem17 {
+import com.github.andrewgazelka.eulerproject.util.Problem
+
+class Problem17 : Problem<Double> {
+    override fun solve(): Double {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }
 
@@ -22,7 +27,7 @@ fun main() {
         val from10To15 = (1..15).map { it.getLength() }.sum()
         yield(from10To15)
 
-        yield(4*teen) // 16 though 19
+        yield(4* teen) // 16 though 19
 
         yield(8 * first1To9) // 20 .. 100
         yield((twenty + thirty + fourty + fifty + sixty + seventy + eighty + ninety)*10)
