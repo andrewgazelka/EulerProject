@@ -1,6 +1,6 @@
 package com.github.andrewgazelka.eulerproject.test
 
-import com.github.andrewgazelka.eulerproject.Problem1
+import com.github.andrewgazelka.eulerproject.problems.Problem1
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

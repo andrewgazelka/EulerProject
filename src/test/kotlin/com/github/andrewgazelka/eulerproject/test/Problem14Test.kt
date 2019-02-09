@@ -1,7 +1,7 @@
 package com.github.andrewgazelka.eulerproject.test
 
-import com.github.andrewgazelka.eulerproject.Problem14
-import com.github.andrewgazelka.eulerproject.chainLength
+import com.github.andrewgazelka.eulerproject.problems.Problem14
+import com.github.andrewgazelka.eulerproject.problems.chainLength
 import com.github.andrewgazelka.eulerproject.util.printTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

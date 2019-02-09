@@ -1,13 +1,14 @@
 package com.github.andrewgazelka.eulerproject.test
 
-import com.github.andrewgazelka.eulerproject.problems.Problem2
+import com.github.andrewgazelka.eulerproject.problems.Problem3
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class Problem2Test{
+class Problem3Test {
 
     @Test
     fun `test solution`(){
-        assertEquals(4613732, Problem2().Obvious().solve())
+        val solve = Problem3().Simple().solve()
+        assertEquals(6857, solve)
     }
 }
