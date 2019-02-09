@@ -6,7 +6,7 @@ import com.github.andrewgazelka.eulerproject.util.largestMultiple
 
 class Problem1(private val to: Int = 1000, val multiple1: Int = 3, val multiple2: Int = 5) {
 
-    val methods by lazy { listOf(Efficient(), BruteForce()) }
+    val methods by lazy { listOf(Efficient(), Obvious()) }
 
     inner class Efficient : Problem<Int> {
         override fun solve(): Int {
@@ -19,7 +19,7 @@ class Problem1(private val to: Int = 1000, val multiple1: Int = 3, val multiple2
         }
     }
 
-    inner class BruteForce : Problem<Int> {
+    inner class Obvious : Problem<Int> {
         override fun solve(): Int {
             return (1 until to)
                 .filter { it % multiple1 == 0 || it % multiple2 == 0 }
