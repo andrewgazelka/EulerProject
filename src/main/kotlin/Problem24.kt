@@ -5,6 +5,18 @@ class Problem24 {
 
 }
 
+
+class Sudoku(val rows: List<List<Int>>) {
+    fun solve(){
+        rows.forEachIndexed{ i, list ->
+
+            list.forEachIndexed { k, element ->
+
+            }
+        }
+    }
+}
+
 fun Int.nextSeq() {
 
 }
@@ -19,10 +31,6 @@ fun main() {
     newBufferedWriter.use {br ->
         repeat(1_000_000 - 1) {
             nums = nextIter(nums)
-//            println(nums.toString())
-//            br.write(nums.toString())
-//            br.newLine()
-//            br.flush()
         }
     }
     println(nums)

@@ -1,15 +1,6 @@
-val Int.isPalindrome: Boolean
-    get() {
-        val string = this.toString()
-        val midpoint = string.length / 2
+package com.github.andrewgazelka.eulerproject.problems
 
-        val midpointEnd = midpoint
-        val midpointStart = if (string.length % 2 == 0) midpoint else midpoint + 1
-
-        val beginning = string.substring(0 until midpointEnd)
-        val end = string.substring(midpointStart until string.length).reversed()
-        return beginning == end
-    }
+import com.github.andrewgazelka.eulerproject.util.isPalindrome
 
 fun main() {
     largestPalendrome()?.also { println(it) }

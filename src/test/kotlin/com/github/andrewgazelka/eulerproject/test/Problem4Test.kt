@@ -1,6 +1,6 @@
 package com.github.andrewgazelka.eulerproject.test
 
-import isPalindrome
+import com.github.andrewgazelka.eulerproject.util.isPalindrome
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
