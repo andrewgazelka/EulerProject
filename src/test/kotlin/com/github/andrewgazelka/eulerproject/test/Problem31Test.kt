@@ -4,7 +4,7 @@ import com.github.andrewgazelka.eulerproject.problems.Problem33
 import org.junit.jupiter.api.Test
 import kotlin.system.measureTimeMillis
 
-class Problem33Test {
+class Problem31Test {
 
     @Test
     fun `right answer`(){

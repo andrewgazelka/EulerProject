@@ -7,12 +7,11 @@ import java.util.*
 
 data class Node(val currentMoney: Int, val index: Int)
 
-class Problem33 : Problem<Long> {
+class Problem33(val currency: Set<Int> = setOf(1,2,5,10,20,50,100,200), val totalMoney: Int = 200) : Problem<Int> {
 
-    override fun solve(): Long {
+    override fun solve(): Int {
 
-        val from = listOf(1, 2, 5, 10, 20, 50, 100, 200)
-        val totalMoney = 200
+        val from = currency.toList()
 
         fun Node.children(): List<Node> {
             val nextIndex = index + 1
@@ -30,7 +29,7 @@ class Problem33 : Problem<Long> {
         return runBlocking {
             root.children()
                 .cmap {
-                    var counter = 0L
+                    var counter = 0
                     val toCheck = Stack<Node>()
                     toCheck.add(it)
 
