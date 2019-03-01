@@ -1,6 +1,8 @@
 package com.github.andrewgazelka.eulerproject.util
 
 import com.github.andrewgazelka.eulerproject.problems.FactorResult
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlin.math.ceil
 import kotlin.math.log2
 import kotlin.math.sqrt
@@ -27,32 +29,15 @@ val Long.isOdd get() = this % 2 == 0L
 
 fun Collection<Long>.product(): Long = reduce { acc, l -> acc * l }
 
-fun sudoko() {
-
-}
-
-
-fun generateS(number: Long) {
-
-}
-
-
-fun distinctLoop(depth: Int, range: IntRange, block: (IntArray) -> Unit) = distinctLoopHelper(depth, range, 0, IntArray(depth), block)
-
-private fun distinctLoopHelper(depth: Int, range: IntRange, on: Int, counter: IntArray, block: (IntArray) -> Unit) {
-    for (i in range) {
-        counter[on] = i
-        if (depth == 1) {
-            block(counter)
-        }
-        else distinctLoopHelper(depth-1, i..range.endInclusive, on+1, counter, block)
-    }
-}
-
 
 fun generateTest(boolean: Boolean) = sequence {
-    if(boolean) yieldAll(setOf(1,2,3))
+    if (boolean) yieldAll(setOf(1, 2, 3))
     else yield(generateTest(!boolean))
+}
+
+suspend fun <A, B> Iterable<A>.cmap(f: suspend (A) -> B): List<B> = coroutineScope {
+    this@cmap.map { async { f(it) } }
+        .map { it.await() }
 }
 
 fun productSumFactors(max: Int) = sequence {
@@ -69,7 +54,7 @@ fun productSumFactors(max: Int) = sequence {
             indexOn--
             if (indexOn < 0) return@sequence
             val nextIndex = ++array[indexOn]
-            array[indexOn + 1] = nextIndex
+            for (i in indexOn until size) array[i] = nextIndex
         }
 
         val sum = array.sum()

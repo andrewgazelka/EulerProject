@@ -10,6 +10,7 @@ class Problem88Test {
 
     @Test
     fun `test problem 88`() {
+        // currently returns 72_469_545
         assertEquals(7_587_457, Problem88().solve())
     }
 }
