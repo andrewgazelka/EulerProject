@@ -7,7 +7,7 @@ import java.util.*
 
 data class Node(val currentMoney: Int, val index: Int)
 
-class Problem33(val currency: Set<Int> = setOf(1,2,5,10,20,50,100,200), val totalMoney: Int = 200) : Problem<Int> {
+class Problem31(val currency: Set<Int> = setOf(1,2,5,10,20,50,100,200), val totalMoney: Int = 200) : Problem<Int> {
 
     override fun solve(): Int {
 

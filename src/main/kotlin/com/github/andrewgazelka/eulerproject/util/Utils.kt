@@ -40,6 +40,25 @@ suspend fun <A, B> Iterable<A>.cmap(f: suspend (A) -> B): List<B> = coroutineSco
         .map { it.await() }
 }
 
+val Int.digits get() = this.toString().map { it.toString().toInt() }
+
+/**
+ * used in 33
+ */
+
+val Fraction.fakeDivide: Fraction?
+    get() {
+        val top = numerator.digits
+        val bottom = denominator.digits
+        require(top.size == 2 && bottom.size == 2) { "Must be 2 digits" }
+        val numerator = top - bottom
+        if (numerator.size != 1) return null
+        val denominator = bottom - top
+        if (denominator.size != 1) return null
+        return Fraction(numerator.first(), (denominator.first()))
+    }
+
+
 fun productSumFactors(max: Int) = sequence {
 
     val size = log2(max.toDouble()).toInt() + 1
@@ -64,6 +83,18 @@ fun productSumFactors(max: Int) = sequence {
     }
 }
 
+fun Int.factors(from: Int = 2, list: ArrayList<Int> = ArrayList()): List<Int> {
+    val to = sqrt(this.toDouble()).toInt() + 1 // ceil because of floating point when really should be floor
+    for (i in from..to) {
+        if (this % i == 0) {
+            list.add(i)
+            return (this / i).factors(from, list)
+        }
+    }
+    list.add(this)
+    return list
+}
+
 tailrec fun Long.factors(from: Long = 2L, list: ArrayList<Long> = ArrayList()): List<Long> {
     val to = ceil(sqrt(this.toDouble())) // ceil because of floating point when really should be floor
     for (i in from..to.toLong()) {
@@ -75,6 +106,8 @@ tailrec fun Long.factors(from: Long = 2L, list: ArrayList<Long> = ArrayList()): 
     list.add(this)
     return list
 }
+fun Iterable<Int>.product() = reduce { acc, i -> acc*i }
+
 
 val Int.isPalindrome: Boolean
     get() {

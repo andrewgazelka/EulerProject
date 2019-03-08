@@ -1,4 +1,4 @@
-package com.github.andrewgazelka.eulerproject.test
+package com.github.andrewgazelka.problems
 
 import nextIter
 import org.junit.jupiter.api.Assertions.assertEquals

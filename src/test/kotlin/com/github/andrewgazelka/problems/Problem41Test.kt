@@ -1,4 +1,4 @@
-package com.github.andrewgazelka.eulerproject.test
+package com.github.andrewgazelka.problems
 
 import com.github.andrewgazelka.eulerproject.problems.Problem41
 import com.github.andrewgazelka.eulerproject.problems.isPermutation
