@@ -29,11 +29,10 @@ val Long.isOdd get() = this % 2 == 0L
 
 fun Collection<Long>.product(): Long = reduce { acc, l -> acc * l }
 
-
-fun generateTest(boolean: Boolean) = sequence {
-    if (boolean) yieldAll(setOf(1, 2, 3))
-    else yield(generateTest(!boolean))
-}
+//fun generateTest(boolean: Boolean) = sequence {
+//    if (boolean) yieldAll(setOf(1, 2, 3))
+//    else yield(generateTest(!boolean))
+//}
 
 suspend fun <A, B> Iterable<A>.cmap(f: suspend (A) -> B): List<B> = coroutineScope {
     this@cmap.map { async { f(it) } }
@@ -58,6 +57,35 @@ val Fraction.fakeDivide: Fraction?
         return Fraction(numerator.first(), (denominator.first()))
     }
 
+
+fun Sequence<IntArray>.addOn(ints: Sequence<Int>) = this
+    .flatMap { array ->
+        ints.map { num ->
+            val newArray = IntArray(array.size + 1)
+            for (i in 0 until array.size) {
+                newArray[i] = array[i]
+            }
+            newArray[array.size] = num
+            newArray
+        }
+    }
+
+
+fun allCombinations(iterable: Iterable<Int>, dimension: Int) =
+    generateSequence(sequenceOf(intArrayOf())) { it.addOn(iterable.asSequence()) }
+        .take(dimension + 1)
+        .last()
+
+
+fun Iterable<Int>.increasing(): Boolean {
+    var lastNum = Int.MIN_VALUE
+    for (num in this) {
+        if (num > lastNum) {
+            lastNum = num
+        } else return false
+    }
+    return true
+}
 
 fun productSumFactors(max: Int) = sequence {
 
@@ -106,7 +134,8 @@ tailrec fun Long.factors(from: Long = 2L, list: ArrayList<Long> = ArrayList()): 
     list.add(this)
     return list
 }
-fun Iterable<Int>.product() = reduce { acc, i -> acc*i }
+
+fun Iterable<Int>.product() = reduce { acc, i -> acc * i }
 
 
 val Int.isPalindrome: Boolean

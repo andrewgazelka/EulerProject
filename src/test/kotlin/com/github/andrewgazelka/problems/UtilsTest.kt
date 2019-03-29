@@ -1,14 +1,19 @@
 package com.github.andrewgazelka.problems
 
-import com.github.andrewgazelka.eulerproject.util.Fraction
-import com.github.andrewgazelka.eulerproject.util.digits
-import com.github.andrewgazelka.eulerproject.util.fakeDivide
-import com.github.andrewgazelka.eulerproject.util.productSumFactors
+import com.github.andrewgazelka.eulerproject.problems.transform
+import com.github.andrewgazelka.eulerproject.util.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
 class UtilsTest {
+
+    @Test
+    fun `test transform correct`() {
+        val original = listOf(1, 2, 3, 4)
+        allCombinations(1..2, 5)
+        assertEquals(listOf(2, 3, 4, 5, 6), original.transform(2))
+    }
 
     @Test
     fun `test distinct`() {
@@ -41,4 +46,34 @@ class UtilsTest {
             }
             .forEach { println(it) }
     }
+
+    @Test
+    fun `test all combinations`() {
+        
+        val expected = listOf(
+            listOf(0, 1),
+            listOf(0, 2),
+            listOf(0, 3),
+            listOf(0, 4),
+            listOf(0, 5),
+            listOf(1, 2),
+            listOf(1, 3),
+            listOf(1, 4),
+            listOf(1, 5),
+            listOf(2, 3),
+            listOf(2, 4),
+            listOf(2, 5),
+            listOf(3, 4),
+            listOf(3, 5),
+            listOf(4, 5)
+        )
+
+        val result = allCombinations(0 until 6, 2)
+            .filter { it.asIterable().increasing() }
+            .map { it.toList() }
+            .toList()
+
+        assertEquals(expected, result)
+    }
+
 }
