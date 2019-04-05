@@ -1,25 +1,84 @@
 package com.github.andrewgazelka.problems
 
-import com.github.andrewgazelka.eulerproject.problems.transform
 import com.github.andrewgazelka.eulerproject.util.*
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class UtilsTest {
 
+
+    private val specialSubsets = listOf(
+        listOf(1),
+        listOf(1, 2),
+        listOf(2, 3, 4),
+        listOf(3, 5, 6, 7),
+        listOf(6, 9, 11, 12, 13)
+    )
+
     @Test
-    fun `test transform correct`() {
-        val original = listOf(1, 2, 3, 4)
-        allCombinations(1..2, 5)
-        assertEquals(listOf(2, 3, 4, 5, 6), original.transform(2))
+    fun `test all subsections`(){
+        assertEquals("[[], [1], [3], [9], [1, 3], [1, 9], [3, 9], [1, 3, 9]]", listOf(1, 3, 9).allSubsections().toList().toString())
     }
 
     @Test
-    fun `test distinct`() {
+    fun `test distinct true`() {
         for (productSumFactor in productSumFactors(20)) {
             println(productSumFactor)
         }
+    }
+
+    @Test
+    fun `test multi for`() {
+
+        val expected = listOf(
+            listOf(0, 0, 0),
+            listOf(0, 0, 1),
+            listOf(0, 0, 2),
+            listOf(0, 1, 0),
+            listOf(0, 1, 1),
+            listOf(0, 1, 2),
+            listOf(0, 2, 0),
+            listOf(0, 2, 1),
+            listOf(0, 2, 2),
+            listOf(1, 0, 0),
+            listOf(1, 0, 1),
+            listOf(1, 0, 2),
+            listOf(1, 1, 0),
+            listOf(1, 1, 1),
+            listOf(1, 1, 2),
+            listOf(1, 2, 0),
+            listOf(1, 2, 1),
+            listOf(1, 2, 2),
+            listOf(2, 0, 0),
+            listOf(2, 0, 1),
+            listOf(2, 0, 2),
+            listOf(2, 1, 0),
+            listOf(2, 1, 1),
+            listOf(2, 1, 2),
+            listOf(2, 2, 0),
+            listOf(2, 2, 1),
+            listOf(2, 2, 2)
+        )
+
+        assertEquals(3*3*3, expected.size)
+        val result = multiForSequence(0 until 3, 3)
+            .map { it.asList() }
+            .toList()
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `test special subset true`() {
+        specialSubsets.forEach {
+            println("testing: $it")
+            assertTrue(it.isSpecialSubset())
+        }
+    }
+
+    @Test
+    fun `test special subset false`() {
+        assertFalse(listOf(1, 3, 4, 5).isSpecialSubset())
     }
 
     @Test
@@ -30,6 +89,7 @@ class UtilsTest {
         assertEquals(Fraction(1, 3), Fraction(10, 30).fakeDivide)
         assertNull(Fraction(17, 85).fakeDivide)
     }
+
 
     @Test
     fun `test digits`() {
@@ -49,7 +109,7 @@ class UtilsTest {
 
     @Test
     fun `test all combinations`() {
-        
+
         val expected = listOf(
             listOf(0, 1),
             listOf(0, 2),
@@ -68,8 +128,8 @@ class UtilsTest {
             listOf(4, 5)
         )
 
-        val result = allCombinations(0 until 6, 2)
-            .filter { it.asIterable().increasing() }
+        val result = multiForSequence(0 until 6, 2)
+            .filter { it.asIterable().isIncreasing() }
             .map { it.toList() }
             .toList()
 

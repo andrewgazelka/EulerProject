@@ -1,6 +1,7 @@
 package com.github.andrewgazelka.eulerproject.util
 
 import com.github.andrewgazelka.eulerproject.problems.FactorResult
+import com.github.andrewgazelka.eulerproject.problems.Problem103
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlin.math.ceil
@@ -28,6 +29,16 @@ val Long.isOdd get() = this % 2 == 0L
 
 
 fun Collection<Long>.product(): Long = reduce { acc, l -> acc * l }
+
+/**
+ * @return if b=10 and the list is {5,8,9}, then returns {10,15,18,19}
+ */
+fun List<Int>.baseFrom(b: Int): List<Int> {
+    val last = this.map { it + b }
+    val first = arrayListOf(b)
+    first.addAll(last)
+    return first
+}
 
 //fun generateTest(boolean: Boolean) = sequence {
 //    if (boolean) yieldAll(setOf(1, 2, 3))
@@ -70,14 +81,98 @@ fun Sequence<IntArray>.addOn(ints: Sequence<Int>) = this
         }
     }
 
+// 2,248
+// 1,905
 
-fun allCombinations(iterable: Iterable<Int>, dimension: Int) =
-    generateSequence(sequenceOf(intArrayOf())) { it.addOn(iterable.asSequence()) }
+
+fun List<Int>.allSubsections(): Sequence<List<Int>> {
+    val dimensions = (0..size)
+
+    return dimensions.asSequence()
+        .flatMap { dimension ->
+            multiForSequence(range = 0 until size, dimension = dimension)
+                .filter { it.asIterable().isIncreasing() }
+                .map { this.subList(it) }
+        }
+}
+
+fun List<Int>.subList(indexes: IntArray) = indexes.map { this[it] }
+fun List<Int>.subList(indexes: Iterable<Int>) = indexes.map { this[it] }
+
+fun doubleSplitIndexes(list: List<Int>) = sequence {
+    val allIndexes = (0 until list.size).toSet()
+
+    val permutationSizes = 0 .. list.size
+    val primaryIndexes = (permutationSizes)
+        .asSequence()
+        .flatMap { permutationSize ->
+            multiForSequence(range = 0 until list.size, dimension = permutationSize).filter {
+                it.asIterable().isIncreasing() // avoids repeated indexes
+            }
+        }
+        .map { it.toSet() }
+
+    for (primaryIndex in primaryIndexes) {
+        val secondaryIndex = allIndexes - primaryIndex
+        val pair = Pair(primaryIndex, secondaryIndex)
+        yield(pair)
+    }
+}
+
+fun doubleSplit(list: List<Int>) =
+    doubleSplitIndexes(list)
+        .map { indexPair ->
+            val firstPart = list.subList(indexPair.first)
+            val secondPart = list.subList(indexPair.second)
+            Pair(firstPart, secondPart)
+        }
+
+fun List<Int>.allTwoSubsets(): Sequence<Pair<List<Int>, List<Int>>> {
+    val doubleSplit = doubleSplit(this)
+        .flatMap { (first, second) ->
+            second.allSubsections().map { Pair(first, it) }
+        }
+
+    return doubleSplit
+}
+
+fun <T> Pair<T,T>.all(predicate: (T) -> Boolean) = this.toList().all(predicate)
+
+fun List<Int>.isSpecialSubset(): Boolean {
+    val doubleSplit = this.sorted().allTwoSubsets().filter { pair ->
+        pair.all { it.isNotEmpty() }
+    }
+
+    return doubleSplit.all {
+
+        val first = it.first
+        val firstSum by lazy { first.sum() }
+
+        val second = it.second
+        val secondSum by lazy { second.sum() }
+
+        val size1 = first.size
+        val size2 = second.size
+
+        if (size1 > size2) {
+            return@all firstSum > secondSum
+        } else if (size1 == size2) {
+            return@all firstSum != secondSum
+        }
+        return@all true
+    }
+}
+
+fun multiForSequence(range: Iterable<Int>, dimension: Int) =
+    generateSequence(sequenceOf(intArrayOf())) { it.addOn(range.asSequence()) }
         .take(dimension + 1)
         .last()
 
+fun multiFor(range: Iterable<Int>, dimension: Int, block: (IntArray) -> Unit) =
+    multiForSequence(range, dimension).map(block)
 
-fun Iterable<Int>.increasing(): Boolean {
+
+fun Iterable<Int>.isIncreasing(): Boolean {
     var lastNum = Int.MIN_VALUE
     for (num in this) {
         if (num > lastNum) {
