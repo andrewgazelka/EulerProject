@@ -214,7 +214,7 @@ fun Int.factors(from: Int = 2, list: ArrayList<Int> = ArrayList()): List<Int> {
             return (this / i).factors(from, list)
         }
     }
-    list.add(this)
+    if(this > 1) list.add(this)
     return list
 }
 

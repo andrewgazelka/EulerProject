@@ -16,8 +16,11 @@ class UtilsTest {
     )
 
     @Test
-    fun `test all subsections`(){
-        assertEquals("[[], [1], [3], [9], [1, 3], [1, 9], [3, 9], [1, 3, 9]]", listOf(1, 3, 9).allSubsections().toList().toString())
+    fun `test all subsections`() {
+        assertEquals(
+            "[[], [1], [3], [9], [1, 3], [1, 9], [3, 9], [1, 3, 9]]",
+            listOf(1, 3, 9).allSubsections().toList().toString()
+        )
     }
 
     @Test
@@ -25,6 +28,13 @@ class UtilsTest {
         for (productSumFactor in productSumFactors(20)) {
             println(productSumFactor)
         }
+    }
+
+
+    @Test
+    fun `test factors`() {
+        assertEquals(listOf(2, 2), 4.factors())
+        assertEquals(listOf(2, 2, 2, 3), 24.factors())
     }
 
     @Test
@@ -60,7 +70,7 @@ class UtilsTest {
             listOf(2, 2, 2)
         )
 
-        assertEquals(3*3*3, expected.size)
+        assertEquals(3 * 3 * 3, expected.size)
         val result = multiForSequence(0 until 3, 3)
             .map { it.asList() }
             .toList()
