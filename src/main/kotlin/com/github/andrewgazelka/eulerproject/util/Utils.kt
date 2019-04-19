@@ -1,7 +1,6 @@
 package com.github.andrewgazelka.eulerproject.util
 
 import com.github.andrewgazelka.eulerproject.problems.FactorResult
-import com.github.andrewgazelka.eulerproject.problems.Problem103
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlin.math.ceil
@@ -204,6 +203,10 @@ fun productSumFactors(max: Int) = sequence {
 
         yield(FactorResult(k, reduced, array.toList()))
     }
+}
+
+fun incrementingSequence(base: Int = 1) = generateSequence(base){
+    it+1
 }
 
 fun Int.factors(from: Int = 2, list: ArrayList<Int> = ArrayList()): List<Int> {
