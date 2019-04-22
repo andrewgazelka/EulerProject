@@ -101,7 +101,7 @@ fun List<Int>.subList(indexes: Iterable<Int>) = indexes.map { this[it] }
 fun doubleSplitIndexes(list: List<Int>) = sequence {
     val allIndexes = (0 until list.size).toSet()
 
-    val permutationSizes = 0 .. list.size
+    val permutationSizes = 0..list.size
     val primaryIndexes = (permutationSizes)
         .asSequence()
         .flatMap { permutationSize ->
@@ -135,7 +135,7 @@ fun List<Int>.allTwoSubsets(): Sequence<Pair<List<Int>, List<Int>>> {
     return doubleSplit
 }
 
-fun <T> Pair<T,T>.all(predicate: (T) -> Boolean) = this.toList().all(predicate)
+fun <T> Pair<T, T>.all(predicate: (T) -> Boolean) = this.toList().all(predicate)
 
 fun List<Int>.isSpecialSubset(): Boolean {
     val doubleSplit = this.sorted().allTwoSubsets().filter { pair ->
@@ -160,6 +160,32 @@ fun List<Int>.isSpecialSubset(): Boolean {
         }
         return@all true
     }
+}
+
+
+fun diophantineReciprocals(n: Long) = sequence {
+
+    // 1/x + 1/y = 1/n
+    // (y + x) /(xy) = 1/n
+    // n(y+x) = (xy)
+    // ny + nx = xy
+    // nx = (x-n)y
+    // y = nx/(x-n)
+
+
+    // 1/x
+
+    for (x in (n+1).. n * 2) {
+        if ((n * x) % (x - n) == 0L) yield(Pair(x, (n*x) / (x-n)))
+    }
+}
+
+fun diphantineReciprocalsCount(n: Long): Int {
+    var count = 0
+    for (x in (n+1)..n * 2) {
+        if (n * x % (x - n) == 0L) count++
+    }
+    return count
 }
 
 fun multiForSequence(range: Iterable<Int>, dimension: Int) =
@@ -205,8 +231,8 @@ fun productSumFactors(max: Int) = sequence {
     }
 }
 
-fun incrementingSequence(base: Int = 1) = generateSequence(base){
-    it+1
+fun incrementingSequence(base: Int = 1) = generateSequence(base) {
+    it + 1
 }
 
 fun Int.factors(from: Int = 2, list: ArrayList<Int> = ArrayList()): List<Int> {
@@ -217,7 +243,7 @@ fun Int.factors(from: Int = 2, list: ArrayList<Int> = ArrayList()): List<Int> {
             return (this / i).factors(from, list)
         }
     }
-    if(this > 1) list.add(this)
+    if (this > 1) list.add(this)
     return list
 }
 

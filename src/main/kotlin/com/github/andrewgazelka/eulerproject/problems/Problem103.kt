@@ -1,7 +1,5 @@
 package com.github.andrewgazelka.eulerproject.problems
 
-import com.github.andrewgazelka.eulerproject.util.*
-
 object Problem103 {
 
     operator fun invoke(length: Int){
@@ -9,12 +7,15 @@ object Problem103 {
             .format()
     }
 
-    fun solve(length: Int) = generateSequence(emptyList<Int>()) { it.nextIter() }
+    fun solve(length: Int) = generateSequence(listOf(1)) { it.nextIter() }
             .first { it.size == length }
 
-    fun List<Int>.nextIter() = generateSequence(1) { it + 1 }
-        .map { this.baseFrom(it) }
-        .first { it.isSpecialSubset() }
+    fun List<Int>.nextIter(): List<Int> {
+        val head = this[size / 2]
+        val tail = this.map { it + head }
+        return listOf(head) + tail
+    }
+
 
     fun List<Int>.format() = this.fold("") { acc, i ->
         "$acc$i"

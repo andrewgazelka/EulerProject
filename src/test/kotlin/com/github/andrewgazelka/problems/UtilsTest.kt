@@ -38,6 +38,12 @@ class UtilsTest {
     }
 
     @Test
+    fun `test reciprocal count`() {
+        diophantineReciprocals(4)
+            .forEach { println(it) }
+    }
+
+    @Test
     fun `test multi for`() {
 
         val expected = listOf(
