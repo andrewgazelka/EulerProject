@@ -38,6 +38,12 @@ class UtilsTest {
     }
 
     @Test
+    fun `test triangle numbers`(){
+        val triangleNums = triangleNumbers().take(8).toList()
+        assertEquals(listOf(1,3,6,10,15,21,28,36), triangleNums)
+    }
+
+    @Test
     fun `test reciprocal count`() {
         diophantineReciprocals(4)
             .forEach { println(it) }

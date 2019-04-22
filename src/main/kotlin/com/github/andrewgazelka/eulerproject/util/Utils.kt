@@ -180,6 +180,15 @@ fun diophantineReciprocals(n: Long) = sequence {
     }
 }
 
+fun triangleNumbers() = sequence {
+    var counter = 1
+    yield(1)
+    incrementingSequence(2).forEach {
+        counter+=it
+        yield(counter)
+    }
+}
+
 fun diphantineReciprocalsCount(n: Long): Int {
     var count = 0
     for (x in (n+1)..n * 2) {
