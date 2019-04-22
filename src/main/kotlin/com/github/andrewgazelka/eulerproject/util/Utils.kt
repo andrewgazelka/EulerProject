@@ -175,23 +175,23 @@ fun diophantineReciprocals(n: Long) = sequence {
 
     // 1/x
 
-    for (x in (n+1).. n * 2) {
-        if ((n * x) % (x - n) == 0L) yield(Pair(x, (n*x) / (x-n)))
+    for (x in (n + 1)..n * 2) {
+        if ((n * x) % (x - n) == 0L) yield(Pair(x, (n * x) / (x - n)))
     }
 }
 
 fun triangleNumbers() = sequence {
-    var counter = 1
-    yield(1)
+    var counter = 1L
+    yield(1L)
     incrementingSequence(2).forEach {
-        counter+=it
+        counter += it
         yield(counter)
     }
 }
 
 fun diphantineReciprocalsCount(n: Long): Int {
     var count = 0
-    for (x in (n+1)..n * 2) {
+    for (x in (n + 1)..n * 2) {
         if (n * x % (x - n) == 0L) count++
     }
     return count
@@ -244,28 +244,65 @@ fun incrementingSequence(base: Int = 1) = generateSequence(base) {
     it + 1
 }
 
-fun Int.factors(from: Int = 2, list: ArrayList<Int> = ArrayList()): List<Int> {
+fun Int.primeFactors(from: Int = 2, list: ArrayList<Int> = ArrayList()): List<Int> {
     val to = sqrt(this.toDouble()).toInt() + 1 // ceil because of floating point when really should be floor
     for (i in from..to) {
         if (this % i == 0) {
             list.add(i)
-            return (this / i).factors(from, list)
+            return (this / i).primeFactors(from, list)
         }
     }
     if (this > 1) list.add(this)
     return list
 }
 
-tailrec fun Long.factors(from: Long = 2L, list: ArrayList<Long> = ArrayList()): List<Long> {
+tailrec fun Long.primeFactors(from: Long = 2L, list: ArrayList<Long> = ArrayList()): List<Long> {
     val to = ceil(sqrt(this.toDouble())) // ceil because of floating point when really should be floor
     for (i in from..to.toLong()) {
         if (this % i == 0L) {
             list.add(i)
-            return (this / i).factors(from, list)
+            return (this / i).primeFactors(from, list)
         }
     }
     list.add(this)
     return list
+}
+
+fun Iterable<Long>.product() = reduce { acc, l -> acc * l }
+
+/**
+ * Finds half of the divisors up to sqrt(num)
+ */
+fun Long.halfDivisorsBf() = sequence {
+    val to = sqrt((this@halfDivisorsBf + 1).toDouble()).toInt()
+    for (i in 1L..to) {
+        if (this@halfDivisorsBf % i == 0L) yield(i)
+    }
+}
+
+fun Long.divisorCount() = halfDivisorsBf().count() * 2
+
+//fun <T> Sequence<T>.count(){
+//    var counter = 0
+//    this.forEach { counter++ }
+//    return counter
+//}
+
+fun Long.allFactors() {
+    val primeFactors = primeFactors()
+    val eachCount = primeFactors
+        .groupingBy { it }
+        .eachCount()
+        .map { it.value + 1 }
+        .product()
+    // 2 2 3 ... 12
+
+    // 1
+    // 2 4
+    // 6 12
+
+
+    // 1, 2, 3, 4, 6, 12
 }
 
 fun Iterable<Int>.product() = reduce { acc, i -> acc * i }

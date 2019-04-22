@@ -33,8 +33,8 @@ class UtilsTest {
 
     @Test
     fun `test factors`() {
-        assertEquals(listOf(2, 2), 4.factors())
-        assertEquals(listOf(2, 2, 2, 3), 24.factors())
+        assertEquals(listOf(2, 2), 4.primeFactors())
+        assertEquals(listOf(2, 2, 2, 3), 24.primeFactors())
     }
 
     @Test

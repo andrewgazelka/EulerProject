@@ -8,9 +8,9 @@ data class Fraction(val numerator: Int, val denominator: Int) {
 
     val decimal by lazy { numerator.toDouble() / denominator }
     val simplified by lazy {
-        val top = numerator.factors().toMutableList()
+        val top = numerator.primeFactors().toMutableList()
 
-        val bottom = denominator.factors().toMutableList()
+        val bottom = denominator.primeFactors().toMutableList()
 
         val iterator = bottom.iterator()
         while (iterator.hasNext()){
