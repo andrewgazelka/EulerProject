@@ -7,8 +7,8 @@ import kotlin.math.ceil
 import kotlin.math.log2
 import kotlin.math.sqrt
 
-fun gauss(min: Int, max: Int, numberCount: Int): Int {
-    return ((min + max) * numberCount) / 2
+fun gauss(min: Int, max: Int, count: Int): Int {
+    return ((min + max) * count) / 2
 }
 
 fun Int.largestMultiple(factor: Int): Int {
