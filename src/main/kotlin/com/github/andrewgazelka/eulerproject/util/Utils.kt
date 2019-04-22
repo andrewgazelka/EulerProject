@@ -280,6 +280,13 @@ fun Long.halfDivisorsBf() = sequence {
     }
 }
 
+fun Long.divisorsCombinatoricsCount(): Int {
+    val primeFactors = primeFactors()
+    val factorToRepeats = primeFactors.groupingBy { it }.eachCount()
+    // each factor can be chosen [0, repeats] ... (repeats+1) ways
+    return factorToRepeats.map { it.value+1 }.product()
+}
+
 fun Long.divisorCount() = halfDivisorsBf().count() * 2
 
 //fun <T> Sequence<T>.count(){

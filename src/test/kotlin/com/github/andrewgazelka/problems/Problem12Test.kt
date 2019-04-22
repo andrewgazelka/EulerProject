@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Test
 class Problem12Test {
 
     @Test
-    fun `test solution`(){
+    fun `test solution`() {
 
         // should be 76576500
-        assertEquals(76_576_500L, Problem12.solveBruteForce())
+        for (f in listOf(Problem12::solveBruteForce, Problem12::solveCombinatorics)) {
+            assertEquals(76_576_500L, f(500)) { "$f" }
+        }
     }
 }
