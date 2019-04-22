@@ -1,13 +1,11 @@
 package com.github.andrewgazelka.eulerproject.problem001
 
-import com.github.andrewgazelka.eulerproject.util.Problem
 import com.github.andrewgazelka.eulerproject.util.gauss
 import com.github.andrewgazelka.eulerproject.util.largestMultiple
 
-
 const val DEFAULT_TO = 1000
-const val MULTIPLE1 = 3
-const val MULTIPLE2 = 5
+const val DEFAULT_MULTIPLE1 = 3
+const val DEFAULT_MULTIPLE2 = 5
 
 
 fun solveEfficient(to: Int, multiple1: Int, multiple2: Int): Int {
@@ -18,7 +16,7 @@ fun solveEfficient(to: Int, multiple1: Int, multiple2: Int): Int {
     return multiplesSum(multiple1) + multiplesSum(multiple2) - multiplesSum(multiple1 * multiple2)
 }
 
-fun solveObvious(to: Int = MULTIPLE1, multiple1: Int = MULTIPLE1, multiple2: Int = MULTIPLE2): Int {
+fun solveObvious(to: Int, multiple1: Int, multiple2: Int): Int {
     return (1 until to)
         .filter { it % multiple1 == 0 || it % multiple2 == 0 }
         .sum()

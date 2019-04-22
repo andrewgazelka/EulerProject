@@ -12,7 +12,7 @@ class Problem1Test {
         val functions = listOf(::solveEfficient, ::solveObvious)
 
         functions.forEach {
-            assertEquals(23, it(10, MULTIPLE1, MULTIPLE2))
+            assertEquals(23, it(10, DEFAULT_MULTIPLE1, DEFAULT_MULTIPLE2))
         }
     }
 }
